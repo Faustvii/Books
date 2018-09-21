@@ -4,7 +4,7 @@ namespace Books.API.IntegrationTests
 {
     public static class TestDatabaseManager
     {
-        private static bool DatabaseInitializedAlready { get; set; } = false;
+        private static bool DatabaseInitializedAlready { get; set; }
         public static void Initialize(BooksContext context)
         {
             if (!DatabaseInitializedAlready)

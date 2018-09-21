@@ -33,8 +33,6 @@ namespace Books.API
 
         public static void ConfigureServices(WebHostBuilderContext hostingContext, IServiceCollection services)
         {
-            var configuration = hostingContext.Configuration;
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Books API", Version = "v1" });

@@ -1,6 +1,4 @@
-using Books.EF;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +13,6 @@ namespace Books.API.IntegrationTests
         public async Task GetBookByTitle(string title)
         {
             // Arrange
-            var t = TestEnvironment.ServiceProvider.GetService<BooksContext>();
             await Context.AddAsync(new Book
             {
                 Title = title,

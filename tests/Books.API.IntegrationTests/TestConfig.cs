@@ -9,8 +9,6 @@ namespace Books.API.IntegrationTests
     public static class TestConfig
     {
         public static void ConfigureServices(WebHostBuilderContext hostingContext, IServiceCollection services)
-        {
-            var configuration = hostingContext.Configuration;
-        }
+        { }
     }
 }

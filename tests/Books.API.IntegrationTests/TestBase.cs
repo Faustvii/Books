@@ -14,7 +14,7 @@ namespace Books.API.IntegrationTests
 
         public BooksContext Context => TestEnvironment.ServiceProvider.GetService<BooksContext>();
 
-        public TestBase()
+        protected TestBase()
         {
             TestEnvironment = new TestEnvironment<Startup>("src");
             TestDatabaseManager.Initialize(Context);
@@ -23,7 +23,7 @@ namespace Books.API.IntegrationTests
         }
 
         #region IDisposable Support
-        private bool isDisposed = false; // To detect redundant calls
+        private bool isDisposed; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {

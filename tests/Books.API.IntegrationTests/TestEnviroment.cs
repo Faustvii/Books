@@ -26,7 +26,7 @@ namespace Books.API.IntegrationTests
         /// e.g. src, samples, test, or test/Websites
         /// Can be useful if the automatic detection does not work.
         /// </param>
-        public TestEnvironment(string targetProjectRelativePath = null)
+        public TestEnvironment(string targetProjectRelativePath)
         {
             ContentRootPath = GetProjectPath(typeof(TStartup).GetTypeInfo().Assembly, targetProjectRelativePath);
             if (ContentRootPath == null)
@@ -37,6 +37,9 @@ namespace Books.API.IntegrationTests
             Server = CreateTestServer();
             Client = Server.CreateClient();
         }
+
+        public TestEnvironment() : this(null)
+        { }
 
         private TestServer CreateTestServer()
         {
@@ -64,13 +67,14 @@ namespace Books.API.IntegrationTests
         {
             // Get name of the target project which we want to test
             var projectName = startupAssembly.GetName().Name;
+            var relativePath = targetRelativePath;
 
             // Get currently executing test project path
             var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
 
-            if (targetRelativePath != null)
+            if (relativePath != null)
             {
-                targetRelativePath = Path.Combine(targetRelativePath, projectName);
+                relativePath = Path.Combine(relativePath, projectName);
             }
 
             // Find the folder which contains the solution file. We then use this information to find the target
@@ -79,7 +83,7 @@ namespace Books.API.IntegrationTests
             do
             {
                 var testDirectoryInfo =
-                    new DirectoryInfo(Path.Combine(targetDirectoryInfo.FullName, targetRelativePath ?? projectName));
+                    new DirectoryInfo(Path.Combine(targetDirectoryInfo.FullName, relativePath ?? projectName));
 
                 if (testDirectoryInfo.Exists)
                 {

@@ -29,7 +29,7 @@ namespace Books.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAuthor([FromRoute] int id)
         {
-            var author = await GetAuthorById(id);
+            var author = await GetAuthorById(id).ConfigureAwait(false);
             if (author == null)
             {
                 return NotFound();
@@ -103,7 +103,7 @@ namespace Books.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthor([FromRoute] int id)
         {
-            var author = await GetAuthorById(id);
+            var author = await GetAuthorById(id).ConfigureAwait(false);
             if (author == null)
             {
                 return NotFound();

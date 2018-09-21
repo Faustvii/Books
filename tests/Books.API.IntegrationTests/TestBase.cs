@@ -8,15 +8,15 @@ namespace Books.API.IntegrationTests
 {
     public abstract class TestBase : IDisposable
     {
-        protected readonly TestEnvironment<Startup> TestEnvironment;
+        protected readonly TestEnvironment<Startup> _testEnvironment;
         private readonly TransactionScope _transactionScope;
         private readonly IDbContextTransaction _transaction;
 
-        public BooksContext Context => TestEnvironment.ServiceProvider.GetService<BooksContext>();
+        public BooksContext Context => _testEnvironment.ServiceProvider.GetService<BooksContext>();
 
         protected TestBase()
         {
-            TestEnvironment = new TestEnvironment<Startup>("src");
+            _testEnvironment = new TestEnvironment<Startup>("src");
             TestDatabaseManager.Initialize(Context);
             _transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             _transaction = Context.Database.BeginTransaction();

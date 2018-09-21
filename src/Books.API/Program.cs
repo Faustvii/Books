@@ -13,7 +13,6 @@ namespace Books.API
     {
         public static void Main(string[] args)
         {
-
             var config = new ConfigurationBuilder().AddUserSecrets<UserSecrets>().Build();
             var humioToken = config["HumioToken"];            
 
@@ -57,7 +56,6 @@ namespace Books.API
             {
                 Log.CloseAndFlush();
             }
-
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

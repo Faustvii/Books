@@ -1,6 +1,7 @@
 ﻿using Books.EF;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
@@ -12,6 +13,9 @@ namespace Books.API
     {
         public static void Main(string[] args)
         {
+            var config = new ConfigurationBuilder().AddUserSecrets<UserSecrets>().Build();
+            var humioToken = config["HumioToken"];            
+
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -19,7 +23,7 @@ namespace Books.API
                 .Enrich.WithDemystifiedStackTraces()
                 .WriteTo.Elasticsearch(new Serilog.Sinks.Elasticsearch.ElasticsearchSinkOptions(new Uri("https://cloud.humio.com:443/api/v1/dataspaces/sandbox/ingest/elasticsearch"))
                 {
-                    ModifyConnectionSettings = c => c.BasicAuthentication("jpDTaa5C3JBBVTJehgvGde6HStMZsvIQrIgUI9SmHZOV", ""),
+                    ModifyConnectionSettings = c => c.BasicAuthentication(humioToken, ""),
                 })
                 .WriteTo.Console()
                 .CreateLogger();
@@ -52,11 +56,12 @@ namespace Books.API
             {
                 Log.CloseAndFlush();
             }
-
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(Config.ConfigureAppConfiguration)
+                .ConfigureServices(Config.ConfigureServices)
                 .UseSerilog()
                 .UseKestrel()
                 .UseStartup<Startup>()

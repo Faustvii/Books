@@ -33,7 +33,6 @@ namespace Books.API.IntegrationTests
                 {
                     _transactionScope.Dispose();
                     _transaction.Rollback();
-
                 }
                 isDisposed = true;
             }

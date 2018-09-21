@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Books.API.Models;
+﻿using Books.API.Models;
 using Books.CommandHandlers.Commands;
 using Books.EF;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Books.API.Controllers
 {
@@ -59,6 +60,7 @@ namespace Books.API.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
+            throw new NotSupportedException();
         }
 
         // DELETE api/values/5

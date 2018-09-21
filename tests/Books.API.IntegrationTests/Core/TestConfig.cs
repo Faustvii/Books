@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Books.API.IntegrationTests
+namespace Books.API.IntegrationTests.Core
 {
     /// <summary>
     /// Sets up configuration that should _ONLY_ be used when running TESTS.

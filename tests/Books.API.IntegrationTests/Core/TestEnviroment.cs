@@ -6,11 +6,11 @@ using System.IO;
 using System.Net.Http;
 using System.Reflection;
 
-namespace Books.API.IntegrationTests
+namespace Books.API.IntegrationTests.Core
 {
     public sealed class TestEnvironment<TStartup> where TStartup : class
     {
-        private readonly string ContentRootPath;
+        private readonly string _contentRootPath;
 
         public TestServer Server { get; }
 
@@ -28,8 +28,8 @@ namespace Books.API.IntegrationTests
         /// </param>
         public TestEnvironment(string targetProjectRelativePath)
         {
-            ContentRootPath = GetProjectPath(typeof(TStartup).GetTypeInfo().Assembly, targetProjectRelativePath);
-            if (ContentRootPath == null)
+            _contentRootPath = GetProjectPath(typeof(TStartup).GetTypeInfo().Assembly, targetProjectRelativePath);
+            if (_contentRootPath == null)
             {
                 throw new InvalidOperationException("Target project can not be located. Try specify the content root path explicitly.");
             }
@@ -46,7 +46,7 @@ namespace Books.API.IntegrationTests
             return new TestServer
             (
                 new WebHostBuilder()
-                    .UseContentRoot(ContentRootPath)
+                    .UseContentRoot(_contentRootPath)
                     .UseEnvironment("Test")
                     .ConfigureAppConfiguration(Config.ConfigureAppConfiguration)
                     .ConfigureServices(TestConfig.ConfigureServices)

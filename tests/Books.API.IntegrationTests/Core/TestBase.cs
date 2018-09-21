@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Transactions;
 
-namespace Books.API.IntegrationTests
+namespace Books.API.IntegrationTests.Core
 {
     public abstract class TestBase : IDisposable
     {

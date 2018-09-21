@@ -9,7 +9,8 @@ namespace Books.EF
             context.Database.EnsureCreated();
             if (context.Books.Any())
             {
-                return; // The db has been seeded;
+                // The db has been seeded
+                return;
             }
             var books = new[]
             {

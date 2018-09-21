@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Books.API.Filters;
 using Books.CommandHandlers;
 using Books.EF;
 using MediatR;
@@ -27,6 +28,8 @@ namespace Books.API
                 .AddEntityFrameworkNpgsql()
                 .AddDbContext<BooksContext>(opts => opts.UseNpgsql(connectionString))
                 .AddMvc();
+
+            services.AddScoped<ValidateModelAttribute>();
 
             var commandHandlerAssembly = typeof(AssemblyAnchor).Assembly;
 

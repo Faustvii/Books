@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Books.EF;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Books.EF;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Books.API.Controllers
 {
@@ -29,19 +29,24 @@ namespace Books.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAuthor([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var author = await _context.Authors.SingleOrDefaultAsync(m => m.Id == id);
-
+            var author = await GetAuthorById(id);
             if (author == null)
             {
                 return NotFound();
             }
 
             return Ok(author);
+        }
+
+        private async Task<Author> GetAuthorById(int id)
+        {
+            var author = await _context.Authors.SingleOrDefaultAsync(m => m.Id == id);
+
+            if (author == null)
+            {
+                return null;
+            }
+            return author;
         }
 
         // PUT: api/Authors/5
@@ -98,12 +103,7 @@ namespace Books.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthor([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var author = await _context.Authors.SingleOrDefaultAsync(m => m.Id == id);
+            var author = await GetAuthorById(id);
             if (author == null)
             {
                 return NotFound();

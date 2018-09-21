@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Books.EF\Books.EF.csproj" />
+    <ProjectReference Include="..\Books.EF\Books.EF.csproj" />
   </ItemGroup>
 
 </Project>

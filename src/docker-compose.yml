@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  books.api:
+    image: ${DOCKER_REGISTRY}booksapi
+    build:
+      context: .
+      dockerfile: Books.API/Dockerfile
+    depends_on:
+      - "db"
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: booksAreAwesome

@@ -54,7 +54,6 @@ namespace Books.API
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Books API V1");
                 });
-
             }
 
             app.UseMvc();

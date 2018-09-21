@@ -1,15 +1,16 @@
+using Books.API.IntegrationTests.Core;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Books.API.IntegrationTests
+namespace Books.API.IntegrationTests.Books
 {
     public class AddBooksTests : TestBase
     {
         [Theory]
-        [MemberData(nameof(TestData), parameters: 500)]
+        [MemberData(nameof(TestData), parameters: 100)]
         public async Task GetBookByTitle(string title)
         {
             // Arrange

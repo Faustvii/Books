@@ -4,15 +4,17 @@ EXPOSE 80
 
 FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /src
-COPY Books.sln ./
 COPY Books.API/Books.API.csproj Books.API/
-RUN dotnet restore -nowarn:msb3202,nu1503
+COPY Books.CommandHandlers/Books.CommandHandlers.csproj Books.CommandHandlers/
+COPY Books.EF/Books.EF.csproj Books.EF/
+COPY Books.Models/Books.Models.csproj Books.Models/
+RUN dotnet restore Books.API/Books.API.csproj
 COPY . .
 WORKDIR /src/Books.API
-RUN dotnet build -c Release -o /app
+RUN dotnet build Books.API.csproj -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /app
+RUN dotnet publish Books.API.csproj -c Release -o /app
 
 FROM base AS final
 WORKDIR /app

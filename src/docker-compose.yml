@@ -13,3 +13,9 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: booksAreAwesome
+  books.api.integrationtests:
+    image: ${DOCKER_REGISTRY}booksapiintegrationtests
+    build:
+      context: .
+      dockerfile: ../tests/Books.API.IntegrationTests/Dockerfile
+

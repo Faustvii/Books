@@ -8,10 +8,10 @@ WORKDIR /books
 #Restore packages
 COPY ./src/*.sln /src/
 COPY src/*/*.csproj ./
-RUN for file in $(ls *.csproj); do mkdir -p /src/${file%.*}/ && mv $file /src/${file%.*}/; done
+RUN for file in $(ls ./*.csproj); do mkdir -p /src/${file%.*}/ && mv $file /src/${file%.*}/; done
 
 COPY ./tests/*/*.csproj ./
-RUN for file in $(ls *.csproj); do mkdir -p /tests/${file%.*}/ && mv $file /tests/${file%.*}/; done
+RUN for file in $(ls ./*.csproj); do mkdir -p /tests/${file%.*}/ && mv $file /tests/${file%.*}/; done
 
 WORKDIR /src
 RUN dotnet restore

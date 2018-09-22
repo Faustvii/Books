@@ -8,10 +8,10 @@ WORKDIR /books
 #Restore packages
 COPY ./src/*.sln /src/
 COPY src/*/*.csproj ./
-RUN for file in $(ls ./*.csproj); do mkdir -p /src/${file%.*}/ && mv $file /src/${file%.*}/; done
+RUN for file in *.csproj; do mkdir -p /src/${file%.*}/ && mv $file /src/${file%.*}/; done
 
 COPY ./tests/*/*.csproj ./
-RUN for file in $(ls ./*.csproj); do mkdir -p /tests/${file%.*}/ && mv $file /tests/${file%.*}/; done
+RUN for file in *.csproj; do mkdir -p /tests/${file%.*}/ && mv $file /tests/${file%.*}/; done
 
 WORKDIR /src
 RUN dotnet restore
@@ -24,10 +24,10 @@ WORKDIR /src/Books.API
 RUN dotnet publish --no-restore Books.API.csproj -c Release -o /app
 
 # tests - build the project directory structure
-# WORKDIR /books
-# COPY ./src/ ./src/
-# COPY ./tests/ ./tests/
-# RUN dotnet test ./tests/Books.API.IntegrationTests/Books.API.IntegrationTests.csproj
+WORKDIR /books
+COPY ./src/ ./src/
+COPY ./tests/ ./tests/
+RUN dotnet test ./tests/Books.API.IntegrationTests/Books.API.IntegrationTests.csproj
 
 FROM base AS final
 WORKDIR /app
